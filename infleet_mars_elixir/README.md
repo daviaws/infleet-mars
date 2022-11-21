@@ -9,6 +9,12 @@ You can check `api.spec.md` at:
 * https://github.com/daviaws/infleet-mars/blob/main/api.spec.md
 * https://github.com/daviaws/infleet-mars/blob/elixir/api.spec.md
 
+## Data Model
+
+![Latest](https://app.diagrams.net/#G1mC3ti7MyesuD3f4gqD4PKRRjk3Zdn1OJ)
+
+[1.0 deprecated! please update once stable](https://app.diagrams.net/?rev=0BxgOLdRDrFk4TU5nVWhBWXFWTEF5ZUxTTU5oZ1NGMXRuMXRFPQ&page=-1#G1mC3ti7MyesuD3f4gqD4PKRRjk3Zdn1OJ)
+
 ## Directives
 For main `asdf` directives check: https://github.com/daviaws/infleet-mars/blob/main/README.md
   you can check also `man/asdf.md` for better understanding
