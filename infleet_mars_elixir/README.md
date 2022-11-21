@@ -27,11 +27,17 @@ For main `asdf` directives check: https://github.com/daviaws/infleet-mars/blob/m
 Script `./project-setup.sh` must do the local setup over `asdf`
 
 ## Run docker
-After project setup you can run `docker-compose up`
+After project setup you can run `docker compose up`
+  
+  you can hook into the docker instance with `docker compose run -it phoenix /bin/bash`
+
+  you can hook into with `iex -S mix` with full command over elixir contexts
 
 ## Run local
-After `docker-compose up` you can just up the db: `docker compose up -d db`
-  and run `mix phx.server`
+After `docker compose up` you can just up the db: `docker compose up -d db`
+  and run `mix setup && mix phx.server`
+
+  you can hook into with `iex -S mix`
 
 ## Total db cost once project setup:
 asdf: mb? (dependencies and plugins)
