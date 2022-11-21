@@ -29,5 +29,5 @@ mix phx.gen.context Movement MovementStatus movements_statuses \
     start_direction:integer \
     end_position_x:integer \
     end_position_y:integer \
-    end_position:integer \
+    end_direction:integer \
     model_version:string

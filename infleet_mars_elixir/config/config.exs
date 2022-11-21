@@ -10,6 +10,14 @@ import Config
 config :infleet_mars_elixir,
   ecto_repos: [InfleetMarsElixir.Repo]
 
+# e.g InfleetMarsElixir.model_version(:movement, :movement_status)
+config :infleet_mars_elixir,
+  models_versions: [
+    movement: [
+      movement_status: "1.0"
+    ]
+  ]
+
 # Configures the endpoint
 config :infleet_mars_elixir, InfleetMarsElixirWeb.Endpoint,
   url: [host: "localhost"],

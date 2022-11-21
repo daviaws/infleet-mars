@@ -11,7 +11,8 @@ defmodule InfleetMarsElixir.MixProject do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -21,9 +22,12 @@ defmodule InfleetMarsElixir.MixProject do
   def application do
     [
       mod: {InfleetMarsElixir.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: applications(Mix.env())
     ]
   end
+
+  defp applications(:test), do: applications(:default) ++ [:ex_machina]
+  defp applications(_), do: [:logger, :runtime_tools]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -44,7 +48,8 @@ defmodule InfleetMarsElixir.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 
