@@ -5,7 +5,36 @@ defmodule InfleetMarsElixir.MovementTest do
 
   import InfleetMarsElixir.Factory
 
-  describe "movables" do
+  describe "context/methods" do
+    alias InfleetMarsElixir.Movement.Movables
+
+    test "move/2 case 1" do
+      movable = insert(:movables, %{x: 1, y: 2, direction: :N})
+      movement = insert(:movements, %{movables_id: movable.id, terminals: "EMEMEMEMM"})
+
+      Movement.set_world(5, 5)
+
+      %Movables{} = result = Movement.move(movable, movement)
+      assert Movement.format(result) == "1 3 N"
+    end
+
+    test "move/2 case 2" do
+      movable = insert(:movables, %{x: 3, y: 3, direction: :L})
+      movement = insert(:movements, %{movables_id: movable.id, terminals: "MMDMMDMDDM"})
+
+      Movement.set_world(5, 5)
+
+      %Movables{} = result = Movement.move(movable, movement)
+      assert Movement.format(result) == "5 1 L"
+    end
+
+    test "list_movables/0 returns all movables" do
+      movables_list = insert_list(2, :movables)
+      assert Movement.list_movables() == movables_list
+    end
+  end
+
+  describe "context/schema movables" do
     alias InfleetMarsElixir.Movement.Movables
 
     test "list_movables/0 returns all movables" do
@@ -33,20 +62,22 @@ defmodule InfleetMarsElixir.MovementTest do
       assert {:error, %Ecto.Changeset{errors: errors}} = Movement.create_movables(invalid_attrs)
 
       assert errors == [
-        direction: {"is invalid",
-         [
-           type: {:parameterized, Ecto.Enum,
-            %{
-              embed_as: :self,
-              mappings: [N: 0, L: 1, S: 2, O: 3],
-              on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
-              on_dump: %{L: 1, N: 0, O: 3, S: 2},
-              on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
-              type: :integer
-            }},
-           validation: :cast
-         ]}
-      ]
+               direction:
+                 {"is invalid",
+                  [
+                    type:
+                      {:parameterized, Ecto.Enum,
+                       %{
+                         embed_as: :self,
+                         mappings: [N: 0, L: 1, S: 2, O: 3],
+                         on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
+                         on_dump: %{L: 1, N: 0, O: 3, S: 2},
+                         on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
+                         type: :integer
+                       }},
+                    validation: :cast
+                  ]}
+             ]
     end
 
     test "update_movables/2 with valid data updates the movables" do
@@ -62,24 +93,29 @@ defmodule InfleetMarsElixir.MovementTest do
     test "update_movables/2 with invalid data returns error changeset" do
       invalid_attrs = %{direction: 42, x: 42, y: 42}
       movables = insert(:movables)
-      assert {:error, %Ecto.Changeset{errors: errors}} = Movement.update_movables(movables, invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{errors: errors}} =
+               Movement.update_movables(movables, invalid_attrs)
+
       assert movables == Movement.get_movables!(movables.id)
 
       assert errors == [
-        direction: {"is invalid",
-         [
-           type: {:parameterized, Ecto.Enum,
-            %{
-              embed_as: :self,
-              mappings: [N: 0, L: 1, S: 2, O: 3],
-              on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
-              on_dump: %{L: 1, N: 0, O: 3, S: 2},
-              on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
-              type: :integer
-            }},
-           validation: :cast
-         ]}
-      ]
+               direction:
+                 {"is invalid",
+                  [
+                    type:
+                      {:parameterized, Ecto.Enum,
+                       %{
+                         embed_as: :self,
+                         mappings: [N: 0, L: 1, S: 2, O: 3],
+                         on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
+                         on_dump: %{L: 1, N: 0, O: 3, S: 2},
+                         on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
+                         type: :integer
+                       }},
+                    validation: :cast
+                  ]}
+             ]
     end
 
     test "delete_movables/1 deletes the movables" do
@@ -94,7 +130,7 @@ defmodule InfleetMarsElixir.MovementTest do
     end
   end
 
-  describe "movements" do
+  describe "context/schema movements" do
     alias InfleetMarsElixir.Movement.Movements
 
     test "list_movements/0 returns all movements" do
@@ -108,7 +144,7 @@ defmodule InfleetMarsElixir.MovementTest do
     end
 
     test "create_movements/1 with valid data creates a movements" do
-      valid_attrs = %{terminals: "M"}
+      valid_attrs = %{terminals: "M", movables: Map.from_struct(insert(:movables))}
 
       assert {:ok, %Movements{} = movements} = Movement.create_movements(valid_attrs)
 
@@ -116,6 +152,7 @@ defmodule InfleetMarsElixir.MovementTest do
       assert movements.errorIndexes == nil
       assert movements.lastIndex == nil
       assert movements.terminals == "M"
+      assert %InfleetMarsElixir.Movement.Movables{} = movements.movables
     end
 
     test "create_movements/1 without required data returns error changeset" do
@@ -132,7 +169,7 @@ defmodule InfleetMarsElixir.MovementTest do
     end
 
     test "create_movements/1 with invalid terminals returns error changeset" do
-      invalid_terminals = %{terminals: "not a movement enum"}
+      invalid_terminals = %{terminals: "not a movement enum", movables: Map.from_struct(insert(:movables))}
 
       assert {
                :error,
@@ -181,7 +218,7 @@ defmodule InfleetMarsElixir.MovementTest do
     end
   end
 
-  describe "movements_statuses" do
+  describe "context/schema movements_statuses" do
     alias InfleetMarsElixir.Movement.MovementStatus
 
     @invalid_required_attrs %{terminal: nil}

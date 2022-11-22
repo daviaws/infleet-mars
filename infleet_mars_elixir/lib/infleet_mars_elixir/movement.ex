@@ -6,7 +6,87 @@ defmodule InfleetMarsElixir.Movement do
   import Ecto.Query, warn: false
   alias InfleetMarsElixir.Repo
 
+  alias InfleetMarsElixir.Movement.Movables
+  alias InfleetMarsElixir.Movement.Movements
   alias InfleetMarsElixir.Movement.MovementStatus
+
+  def set_world(x, y) do
+    Application.put_env(:infleet_mars_elixir, :world, %{x: x, y: y})
+  end
+
+  def world() do
+    Application.get_env(:infleet_mars_elixir, :world)
+  end
+
+  def format(%Movables{} = movable) do
+    "#{movable.x} #{movable.y} #{movable.direction}"
+  end
+
+  def move(%Movables{} = movable, %Movements{} = movement) do
+    %{x: max_x, y: max_y} = world()
+
+    # fixed definitions
+    directions = InfleetMarsElixir.enum(:direction)
+    limit = length(directions)
+
+    Enum.reduce(String.graphemes(movement.terminals), movable, fn movement, movable ->
+      case movement do
+        "E" ->
+          # to turn left: enum - 1
+          new_direction = Keyword.get(directions, movable.direction) - 1
+          # fix overflow
+          new_direction =
+            if new_direction < 0 do
+              limit - 1
+            else
+              new_direction
+            end
+
+          change_movables(movable, %{direction: new_direction}) |> Repo.update!()
+
+        "D" ->
+          # to turn right: enum + 1, fix overflow
+          new_direction = rem(Keyword.get(directions, movable.direction) + 1, limit)
+
+          change_movables(movable, %{direction: new_direction}) |> Repo.update!()
+
+        "M" ->
+          case movable.direction do
+            :L ->
+              new_x = rem(movable.x + 1, max_x + 1)
+              change_movables(movable, %{x: new_x}) |> Repo.update!()
+
+            :N ->
+              new_y = rem(movable.y + 1, max_y + 1)
+              change_movables(movable, %{y: new_y}) |> Repo.update!()
+
+            :O ->
+              new_x = movable.x - 1
+              # fix overflow
+              new_x =
+                if new_x < 0 do
+                  max_x
+                else
+                  new_x
+                end
+
+              change_movables(movable, %{x: new_x}) |> Repo.update!()
+
+            :S ->
+              new_y = movable.y - 1
+              # fix overflow
+              new_y =
+                if new_y < 0 do
+                  max_y
+                else
+                  new_y
+                end
+
+              change_movables(movable, %{y: new_y}) |> Repo.update!()
+          end
+      end
+    end)
+  end
 
   @doc """
   Returns the list of movements_statuses.
@@ -102,8 +182,6 @@ defmodule InfleetMarsElixir.Movement do
     MovementStatus.changeset(movement_status, attrs)
   end
 
-  alias InfleetMarsElixir.Movement.Movements
-
   @doc """
   Returns the list of movements.
 
@@ -197,8 +275,6 @@ defmodule InfleetMarsElixir.Movement do
   def change_movements(%Movements{} = movements, attrs \\ %{}) do
     Movements.changeset(movements, attrs)
   end
-
-  alias InfleetMarsElixir.Movement.Movables
 
   @doc """
   Returns the list of movables.

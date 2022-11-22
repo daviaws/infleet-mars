@@ -20,6 +20,10 @@ config :infleet_mars_elixir,
     ]
   ]
 
+# e.g InfleetMarsElixir.Movement.world()
+config :infleet_mars_elixir,
+  world: %{x: 5, y: 5}
+
 # Configures the endpoint
 config :infleet_mars_elixir, InfleetMarsElixirWeb.Endpoint,
   url: [host: "localhost"],

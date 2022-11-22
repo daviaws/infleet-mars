@@ -19,7 +19,7 @@ defmodule InfleetMarsElixir.Movement.Movements do
     timestamps()
   end
 
-  @all [:terminals, :completed, :lastIndex, :errorIndexes]
+  @all [:terminals, :completed, :lastIndex, :errorIndexes, :movables_id]
   @required [:terminals, :model_version]
 
   @doc false
@@ -28,6 +28,7 @@ defmodule InfleetMarsElixir.Movement.Movements do
     |> Map.put(:model_version, model_version())
     |> cast(attrs, @all)
     |> validate_required(@required)
+    |> cast_assoc(:movables)
     |> validate_format(:terminals, InfleetMarsElixir.enum_format(:movement),
       message: "must be valid movementEnum"
     )
