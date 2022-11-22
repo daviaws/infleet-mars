@@ -8,17 +8,17 @@ defmodule InfleetMarsElixir.Movement.MovementStatus do
 
   schema "movements_statuses" do
     field :completed, :boolean, default: false
-    field :end_direction, :integer
+    field :end_direction, Ecto.Enum, values: InfleetMarsElixir.enum(:direction)
     field :end_position_x, :integer
     field :end_position_y, :integer
     field :model_version, :string
     field :sent_at, :naive_datetime
-    field :start_direction, :integer
+    field :start_direction, Ecto.Enum, values: InfleetMarsElixir.enum(:direction)
     field :start_position_x, :integer
     field :start_position_y, :integer
     field :status_code, :integer
     field :status_message, :string
-    field :terminal, :integer
+    field :terminal, Ecto.Enum, values: InfleetMarsElixir.enum(:movement)
 
     timestamps()
   end
