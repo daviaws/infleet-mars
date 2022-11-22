@@ -21,6 +21,13 @@ defmodule InfleetMarsElixir do
   defp keys(enum) when is_list(enum), do: Keyword.keys(enum)
   defp keys(_), do: nil
 
+  def enum_format(enum) when is_atom(enum) do
+    case enum_keys_string(enum) do
+      nil -> nil
+      keys_string -> ~r/^[#{keys_string}]+$/
+    end
+  end
+
   @doc """
   Matches if string is subset from enum
   """

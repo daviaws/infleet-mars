@@ -1,4 +1,4 @@
-defmodule InfleetMarsElixir.Movements.MovementStatusFactory do
+defmodule InfleetMarsElixir.Movement.MovementStatusFactory do
   @moduledoc false
 
   alias InfleetMarsElixir.Movement.MovementStatus
@@ -10,6 +10,7 @@ defmodule InfleetMarsElixir.Movements.MovementStatusFactory do
         %MovementStatus{
           model_version: InfleetMarsElixir.model_version(:movement, :movement_status),
           completed: false,
+          index: 0,
           end_direction: nil,
           end_position_x: nil,
           end_position_y: nil,

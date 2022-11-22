@@ -5,6 +5,93 @@ defmodule InfleetMarsElixir.MovementTest do
 
   import InfleetMarsElixir.Factory
 
+  describe "movements" do
+    alias InfleetMarsElixir.Movement.Movements
+
+    test "list_movements/0 returns all movements" do
+      movements_list = insert_list(2, :movements)
+      assert Movement.list_movements() == movements_list
+    end
+
+    test "get_movements!/1 returns the movements with given id" do
+      movements = insert(:movements)
+      assert Movement.get_movements!(movements.id) == movements
+    end
+
+    test "create_movements/1 with valid data creates a movements" do
+      valid_attrs = %{terminals: "M"}
+
+      assert {:ok, %Movements{} = movements} = Movement.create_movements(valid_attrs)
+
+      assert movements.completed == false
+      assert movements.errorIndexes == nil
+      assert movements.lastIndex == nil
+      assert movements.terminals == "M"
+    end
+
+    test "create_movements/1 without required data returns error changeset" do
+      required_attrs = %{terminals: nil}
+
+      assert {
+               :error,
+               %Ecto.Changeset{
+                 errors: [
+                   terminals: {"can't be blank", [validation: :required]}
+                 ]
+               }
+             } = Movement.create_movements(required_attrs)
+    end
+
+    test "create_movements/1 with invalid terminals returns error changeset" do
+      invalid_terminals = %{terminals: "not a movement enum"}
+
+      assert {
+               :error,
+               %Ecto.Changeset{
+                 errors: [
+                   terminals: {"must be valid movementEnum", [validation: :format]}
+                 ]
+               }
+             } = Movement.create_movements(invalid_terminals)
+    end
+
+    test "update_movements/2 with valid data updates the movements" do
+      movements = insert(:movements)
+
+      update_attrs = %{
+        completed: true,
+        errorIndexes: [],
+        lastIndex: 10,
+        terminals: "MMM"
+      }
+
+      assert {:ok, %Movements{} = movements} = Movement.update_movements(movements, update_attrs)
+      assert movements.completed == true
+      assert movements.errorIndexes == []
+      assert movements.lastIndex == 10
+      assert movements.terminals == "MMM"
+    end
+
+    test "update_movements/2 without required data returns error changeset" do
+      required_attrs = %{terminals: nil}
+
+      movements = insert(:movements)
+      assert {:error, %Ecto.Changeset{}} = Movement.update_movements(movements, required_attrs)
+      assert movements == Movement.get_movements!(movements.id)
+    end
+
+    test "delete_movements/1 deletes the movements" do
+      movements = insert(:movements)
+      assert {:ok, %Movements{}} = Movement.delete_movements(movements)
+      assert_raise Ecto.NoResultsError, fn -> Movement.get_movements!(movements.id) end
+    end
+
+    test "change_movements/1 returns a movements changeset" do
+      movements = insert(:movements)
+      assert %Ecto.Changeset{} = Movement.change_movements(movements)
+    end
+  end
+
   describe "movements_statuses" do
     alias InfleetMarsElixir.Movement.MovementStatus
 
@@ -23,6 +110,7 @@ defmodule InfleetMarsElixir.MovementTest do
     test "create_movement_status/1 with valid data creates a movement_status" do
       valid_attrs = %{
         completed: true,
+        index: 0,
         end_direction:
           InfleetMarsElixir.enum_values(:direction) |> InfleetMarsElixir.Random.pick(),
         end_position_x: 42,
@@ -57,14 +145,22 @@ defmodule InfleetMarsElixir.MovementTest do
 
     test "create_movement_status/1 with invalid data returns error changeset" do
       assert {:error,
-              %Ecto.Changeset{errors: [terminal: {"can't be blank", [validation: :required]}]}} =
-               Movement.create_movement_status(@invalid_required_attrs)
+              %Ecto.Changeset{
+                errors: [
+                  terminal: {"can't be blank", [validation: :required]},
+                  index: {"can't be blank", [validation: :required]}
+                ]
+              }} = Movement.create_movement_status(@invalid_required_attrs)
     end
 
     test "create_movement_status/1 without required data returns error changeset" do
       assert {:error,
-              %Ecto.Changeset{errors: [terminal: {"can't be blank", [validation: :required]}]}} =
-               Movement.create_movement_status(@invalid_required_attrs)
+              %Ecto.Changeset{
+                errors: [
+                  terminal: {"can't be blank", [validation: :required]},
+                  index: {"can't be blank", [validation: :required]}
+                ]
+              }} = Movement.create_movement_status(@invalid_required_attrs)
     end
 
     test "update_movement_status/2 with valid data updates the movement_status" do
@@ -114,6 +210,7 @@ defmodule InfleetMarsElixir.MovementTest do
 
     test "delete_movement_status/1 deletes the movement_status" do
       movement_status = insert(:movement_status)
+
       assert {:ok, %MovementStatus{}} = Movement.delete_movement_status(movement_status)
 
       assert_raise Ecto.NoResultsError, fn ->

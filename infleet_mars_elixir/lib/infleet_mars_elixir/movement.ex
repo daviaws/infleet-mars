@@ -101,4 +101,100 @@ defmodule InfleetMarsElixir.Movement do
   def change_movement_status(%MovementStatus{} = movement_status, attrs \\ %{}) do
     MovementStatus.changeset(movement_status, attrs)
   end
+
+  alias InfleetMarsElixir.Movement.Movements
+
+  @doc """
+  Returns the list of movements.
+
+  ## Examples
+
+      iex> list_movements()
+      [%Movements{}, ...]
+
+  """
+  def list_movements do
+    Repo.all(Movements)
+  end
+
+  @doc """
+  Gets a single movements.
+
+  Raises `Ecto.NoResultsError` if the Movements does not exist.
+
+  ## Examples
+
+      iex> get_movements!(123)
+      %Movements{}
+
+      iex> get_movements!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_movements!(id), do: Repo.get!(Movements, id)
+
+  @doc """
+  Creates a movements.
+
+  ## Examples
+
+      iex> create_movements(%{field: value})
+      {:ok, %Movements{}}
+
+      iex> create_movements(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_movements(attrs \\ %{}) do
+    %Movements{}
+    |> Movements.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a movements.
+
+  ## Examples
+
+      iex> update_movements(movements, %{field: new_value})
+      {:ok, %Movements{}}
+
+      iex> update_movements(movements, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_movements(%Movements{} = movements, attrs) do
+    movements
+    |> Movements.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a movements.
+
+  ## Examples
+
+      iex> delete_movements(movements)
+      {:ok, %Movements{}}
+
+      iex> delete_movements(movements)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_movements(%Movements{} = movements) do
+    Repo.delete(movements)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking movements changes.
+
+  ## Examples
+
+      iex> change_movements(movements)
+      %Ecto.Changeset{data: %Movements{}}
+
+  """
+  def change_movements(%Movements{} = movements, attrs \\ %{}) do
+    Movements.changeset(movements, attrs)
+  end
 end

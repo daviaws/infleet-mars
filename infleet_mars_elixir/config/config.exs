@@ -14,6 +14,7 @@ config :infleet_mars_elixir,
 config :infleet_mars_elixir,
   models_versions: [
     movement: [
+      movements: "1.0",
       movement_status: "1.0"
     ]
   ]

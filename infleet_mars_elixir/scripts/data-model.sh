@@ -31,3 +31,13 @@ mix phx.gen.context Movement MovementStatus movements_statuses \
     end_position_y:integer \
     end_direction:integer \
     model_version:string
+
+# movements (1.0)
+mix phx.gen.context Movement Movements movements \
+    terminals:string \
+    completed:boolean \
+    lastIndex:integer \
+    errorIndexes:array:integer
+
+# add movementStatus (1.0) index and movements fk
+mix ecto.gen.migration add_movements_status_movements_fk
