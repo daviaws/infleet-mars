@@ -1,17 +1,16 @@
-defmodule InfleetMarsElixir.Movement.MovementsFactory do
+defmodule InfleetMarsElixir.Movement.MovablesFactory do
   @moduledoc false
 
-  alias InfleetMarsElixir.Movement.Movements
+  alias InfleetMarsElixir.Movement.Movables
 
   defmacro __using__(_opts) do
     quote do
-      def movements_factory do
-        %Movements{
-          model_version: InfleetMarsElixir.model_version(:movement, :movements),
-          completed: false,
-          terminals: "M",
-          errorIndexes: [],
-          lastIndex: -1
+      def movables_factory do
+        %Movables{
+          model_version: InfleetMarsElixir.model_version(:movement, :movables),
+          direction: 0,
+          x: 0,
+          y: 0
         }
       end
     end

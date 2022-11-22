@@ -2,6 +2,7 @@ defmodule InfleetMarsElixir.Movement.Movements do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias InfleetMarsElixir.Movement.Movables
   alias InfleetMarsElixir.Movement.MovementStatus
 
   def model_version(), do: InfleetMarsElixir.model_version(:movement, :movements)
@@ -12,6 +13,7 @@ defmodule InfleetMarsElixir.Movement.Movements do
     field :lastIndex, :integer
     field :terminals, :string
     field :model_version, :string
+    belongs_to :movables, Movables
     has_many :statuses, MovementStatus
 
     timestamps()

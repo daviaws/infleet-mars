@@ -197,4 +197,100 @@ defmodule InfleetMarsElixir.Movement do
   def change_movements(%Movements{} = movements, attrs \\ %{}) do
     Movements.changeset(movements, attrs)
   end
+
+  alias InfleetMarsElixir.Movement.Movables
+
+  @doc """
+  Returns the list of movables.
+
+  ## Examples
+
+      iex> list_movables()
+      [%Movables{}, ...]
+
+  """
+  def list_movables do
+    Repo.all(Movables)
+  end
+
+  @doc """
+  Gets a single movables.
+
+  Raises `Ecto.NoResultsError` if the Movables does not exist.
+
+  ## Examples
+
+      iex> get_movables!(123)
+      %Movables{}
+
+      iex> get_movables!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_movables!(id), do: Repo.get!(Movables, id)
+
+  @doc """
+  Creates a movables.
+
+  ## Examples
+
+      iex> create_movables(%{field: value})
+      {:ok, %Movables{}}
+
+      iex> create_movables(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_movables(attrs \\ %{}) do
+    %Movables{}
+    |> Movables.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a movables.
+
+  ## Examples
+
+      iex> update_movables(movables, %{field: new_value})
+      {:ok, %Movables{}}
+
+      iex> update_movables(movables, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_movables(%Movables{} = movables, attrs) do
+    movables
+    |> Movables.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a movables.
+
+  ## Examples
+
+      iex> delete_movables(movables)
+      {:ok, %Movables{}}
+
+      iex> delete_movables(movables)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_movables(%Movables{} = movables) do
+    Repo.delete(movables)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking movables changes.
+
+  ## Examples
+
+      iex> change_movables(movables)
+      %Ecto.Changeset{data: %Movables{}}
+
+  """
+  def change_movables(%Movables{} = movables, attrs \\ %{}) do
+    Movables.changeset(movables, attrs)
+  end
 end

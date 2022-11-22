@@ -3,7 +3,7 @@ defmodule InfleetMarsElixir.Factory do
 
   use ExMachina.Ecto, repo: InfleetMarsElixir.Repo
 
-  # use InfleetMarsElixir.Movements.MovablesFactory
+  use InfleetMarsElixir.Movement.MovablesFactory
   use InfleetMarsElixir.Movement.MovementsFactory
   use InfleetMarsElixir.Movement.MovementStatusFactory
 end

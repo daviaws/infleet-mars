@@ -5,6 +5,95 @@ defmodule InfleetMarsElixir.MovementTest do
 
   import InfleetMarsElixir.Factory
 
+  describe "movables" do
+    alias InfleetMarsElixir.Movement.Movables
+
+    test "list_movables/0 returns all movables" do
+      movables_list = insert_list(2, :movables)
+      assert Movement.list_movables() == movables_list
+    end
+
+    test "get_movables!/1 returns the movables with given id" do
+      movables = insert(:movables)
+      assert Movement.get_movables!(movables.id) == movables
+    end
+
+    test "create_movables/1 with valid data creates a movables" do
+      valid_attrs = %{direction: :N, x: 42, y: 42}
+
+      assert {:ok, %Movables{} = movables} = Movement.create_movables(valid_attrs)
+
+      assert movables.direction == :N
+      assert movables.x == 42
+      assert movables.y == 42
+    end
+
+    test "create_movables/1 with invalid data returns error changeset" do
+      invalid_attrs = %{direction: 42, x: 42, y: 42}
+      assert {:error, %Ecto.Changeset{errors: errors}} = Movement.create_movables(invalid_attrs)
+
+      assert errors == [
+        direction: {"is invalid",
+         [
+           type: {:parameterized, Ecto.Enum,
+            %{
+              embed_as: :self,
+              mappings: [N: 0, L: 1, S: 2, O: 3],
+              on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
+              on_dump: %{L: 1, N: 0, O: 3, S: 2},
+              on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
+              type: :integer
+            }},
+           validation: :cast
+         ]}
+      ]
+    end
+
+    test "update_movables/2 with valid data updates the movables" do
+      movables = insert(:movables)
+      update_attrs = %{direction: :S, x: 43, y: 43}
+
+      assert {:ok, %Movables{} = movables} = Movement.update_movables(movables, update_attrs)
+      assert movables.direction == :S
+      assert movables.x == 43
+      assert movables.y == 43
+    end
+
+    test "update_movables/2 with invalid data returns error changeset" do
+      invalid_attrs = %{direction: 42, x: 42, y: 42}
+      movables = insert(:movables)
+      assert {:error, %Ecto.Changeset{errors: errors}} = Movement.update_movables(movables, invalid_attrs)
+      assert movables == Movement.get_movables!(movables.id)
+
+      assert errors == [
+        direction: {"is invalid",
+         [
+           type: {:parameterized, Ecto.Enum,
+            %{
+              embed_as: :self,
+              mappings: [N: 0, L: 1, S: 2, O: 3],
+              on_cast: %{"L" => :L, "N" => :N, "O" => :O, "S" => :S},
+              on_dump: %{L: 1, N: 0, O: 3, S: 2},
+              on_load: %{0 => :N, 1 => :L, 2 => :S, 3 => :O},
+              type: :integer
+            }},
+           validation: :cast
+         ]}
+      ]
+    end
+
+    test "delete_movables/1 deletes the movables" do
+      movables = insert(:movables)
+      assert {:ok, %Movables{}} = Movement.delete_movables(movables)
+      assert_raise Ecto.NoResultsError, fn -> Movement.get_movables!(movables.id) end
+    end
+
+    test "change_movables/1 returns a movables changeset" do
+      movables = insert(:movables)
+      assert %Ecto.Changeset{} = Movement.change_movables(movables)
+    end
+  end
+
   describe "movements" do
     alias InfleetMarsElixir.Movement.Movements
 
@@ -115,7 +204,6 @@ defmodule InfleetMarsElixir.MovementTest do
           InfleetMarsElixir.enum_values(:direction) |> InfleetMarsElixir.Random.pick(),
         end_position_x: 42,
         end_position_y: 42,
-        model_version: "some model_version",
         sent_at: ~N[2022-11-20 20:48:00],
         start_direction:
           InfleetMarsElixir.enum_values(:direction) |> InfleetMarsElixir.Random.pick(),
@@ -133,7 +221,6 @@ defmodule InfleetMarsElixir.MovementTest do
       assert movement_status.end_direction in InfleetMarsElixir.enum_keys(:direction)
       assert movement_status.end_position_x == 42
       assert movement_status.end_position_y == 42
-      assert movement_status.model_version == "some model_version"
       assert movement_status.sent_at == ~N[2022-11-20 20:48:00]
       assert movement_status.start_direction in InfleetMarsElixir.enum_keys(:direction)
       assert movement_status.start_position_x == 42
@@ -171,7 +258,6 @@ defmodule InfleetMarsElixir.MovementTest do
         end_direction: :N,
         end_position_x: 43,
         end_position_y: 43,
-        model_version: "some updated model_version",
         sent_at: ~N[2022-11-21 20:48:00],
         start_direction: :N,
         start_position_x: 43,
@@ -188,7 +274,6 @@ defmodule InfleetMarsElixir.MovementTest do
       assert movement_status.end_direction == :N
       assert movement_status.end_position_x == 43
       assert movement_status.end_position_y == 43
-      assert movement_status.model_version == "some updated model_version"
       assert movement_status.sent_at == ~N[2022-11-21 20:48:00]
       assert movement_status.start_direction == :N
       assert movement_status.start_position_x == 43

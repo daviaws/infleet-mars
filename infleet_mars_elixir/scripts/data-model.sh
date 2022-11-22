@@ -41,3 +41,13 @@ mix phx.gen.context Movement Movements movements \
 
 # add movementStatus (1.0) index and movements fk
 mix ecto.gen.migration add_movements_status_movements_fk
+
+# movables (1.0) (e.g. car)
+mix phx.gen.context Movement Movables movables \
+    x:integer \
+    y:integer \
+    direction:integer \
+    model_version:string
+
+# add movements (1.0) movable fk
+mix ecto.gen.migration add_movements_movable_fk
