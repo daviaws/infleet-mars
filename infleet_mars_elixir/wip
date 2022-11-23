@@ -1,14 +1,23 @@
+**ROADMAP**
+[async] bind each movement/status
+
+[client/web] react
+
 **WIP!**
+
+23/11/2022
+
+[api/rest] get /movables, post movables, post movements
+
+**Done!**
 
 22/11/2022
 
-[statement] main test case
+[statement] main test case `mix run -e "InfleetMarsElixir.Task.exec_sample()"`
 
 [movement/movable] context
 
 [movement/movements] context
-
-**Done!**
 
 21/11/2022
 

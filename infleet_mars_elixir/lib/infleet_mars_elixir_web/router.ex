@@ -7,6 +7,10 @@ defmodule InfleetMarsElixirWeb.Router do
 
   scope "/api", InfleetMarsElixirWeb do
     pipe_through :api
+
+    scope "/v1", V1, as: :v1 do
+      resources "/movables", MovablesController, except: [:new, :edit]
+    end
   end
 
   # Enables LiveDashboard only for development

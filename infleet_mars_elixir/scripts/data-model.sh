@@ -51,3 +51,10 @@ mix phx.gen.context Movement Movables movables \
 
 # add movements (1.0) movable fk
 mix ecto.gen.migration add_movements_movable_fk
+
+# movables api (1.0)
+mix phx.gen.json Movement Movables movables \
+    x:integer \
+    y:integer \
+    direction:string \
+    --no-context --no-schema
