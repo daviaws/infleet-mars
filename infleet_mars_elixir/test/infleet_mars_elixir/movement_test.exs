@@ -3,8 +3,6 @@ defmodule InfleetMarsElixir.MovementTest do
 
   alias InfleetMarsElixir.Movement
 
-  import InfleetMarsElixir.Factory
-
   describe "context/methods" do
     alias InfleetMarsElixir.Movement.Movables
 

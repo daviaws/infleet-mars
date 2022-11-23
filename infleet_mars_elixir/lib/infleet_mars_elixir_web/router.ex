@@ -10,6 +10,7 @@ defmodule InfleetMarsElixirWeb.Router do
 
     scope "/v1", V1, as: :v1 do
       resources "/movables", MovablesController, except: [:new, :edit]
+      resources "/movements", MovementsController, except: [:new, :edit]
     end
   end
 

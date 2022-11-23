@@ -24,6 +24,7 @@ defmodule InfleetMarsElixir.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import InfleetMarsElixir.DataCase
+      import InfleetMarsElixir.Factory
     end
   end
 

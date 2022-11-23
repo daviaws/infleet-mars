@@ -58,3 +58,9 @@ mix phx.gen.json Movement Movables movables \
     y:integer \
     direction:string \
     --no-context --no-schema
+
+# movements api (1.0)
+mix phx.gen.json Movement Movements movements \
+    terminals:string \
+    movables_id:integer \
+    --no-context --no-schema

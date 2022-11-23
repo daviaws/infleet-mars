@@ -3,8 +3,6 @@ defmodule InfleetMarsElixirWeb.MovablesControllerTest do
 
   alias InfleetMarsElixir.Movement.Movables
 
-  import InfleetMarsElixir.Factory
-
   @create_attrs %{
     direction: "N",
     x: 42,
