@@ -36,7 +36,10 @@ defmodule InfleetMarsElixir.Task.Files do
 
         _odd = _movements when rem(index, 2) == 1 ->
           movables = acc
-          {:ok, movement} = Movement.create_movements(%{terminals: clean, movables: Map.from_struct(movables)})
+
+          {:ok, movement} =
+            Movement.create_movements(%{terminals: clean, movables: Map.from_struct(movables)})
+
           result = Movement.move(movables, movement)
           IO.puts("Results: #{Movement.format(result)}")
       end

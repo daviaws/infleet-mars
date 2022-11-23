@@ -169,7 +169,10 @@ defmodule InfleetMarsElixir.MovementTest do
     end
 
     test "create_movements/1 with invalid terminals returns error changeset" do
-      invalid_terminals = %{terminals: "not a movement enum", movables: Map.from_struct(insert(:movables))}
+      invalid_terminals = %{
+        terminals: "not a movement enum",
+        movables: Map.from_struct(insert(:movables))
+      }
 
       assert {
                :error,
