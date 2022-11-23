@@ -10,6 +10,20 @@ import Config
 config :infleet_mars_elixir,
   ecto_repos: [InfleetMarsElixir.Repo]
 
+# e.g InfleetMarsElixir.model_version(:movement, :movement_status)
+config :infleet_mars_elixir,
+  models_versions: [
+    movement: [
+      movables: "1.0",
+      movements: "1.0",
+      movement_status: "1.0"
+    ]
+  ]
+
+# e.g InfleetMarsElixir.Movement.world()
+config :infleet_mars_elixir,
+  world: %{x: 5, y: 5}
+
 # Configures the endpoint
 config :infleet_mars_elixir, InfleetMarsElixirWeb.Endpoint,
   url: [host: "localhost"],

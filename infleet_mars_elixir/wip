@@ -1,10 +1,31 @@
-Checkpoint: definições de API concluídas, dependências de projeto instaladas e generalizadas a partir do `asdf`.
+**WIP!**
 
-Done!
+22/11/2022
+
+[statement] main test case
+
+[movement/movable] context
+
+[movement/movements] context
+
+**Done!**
+
+21/11/2022
+
+enums
+
+[movement/movement_status] context
+
+Project scafolding
+
+Diagrama de classes
+
+18/11/2022
+
+Checkpoint: definições de API concluídas, dependências de projeto instaladas e generalizadas a partir do `asdf`.
 
 Vamos subir a API Phoenix agora!
 https://www.youtube.com/watch?v=-ET_hrZ2gZM
 
-Pausa.
+https://github.com/daviaws/infleet-mars/pull/1
 
-Wip :flag:
