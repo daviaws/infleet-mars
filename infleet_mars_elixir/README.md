@@ -39,6 +39,11 @@ After `docker compose up` you can just up the db: `docker compose up -d db`
 
   you can hook into with `iex -S mix`
 
+## Test results
+Run `mix run -e "InfleetMarsElixir.Task.exec_sample()"`
+
+`InfleetMarsElixir.Task` has the way to show how the Task.Files work with fixtures.
+
 ## Total db cost once project setup:
 asdf: mb? (dependencies and plugins)
 docker-desktop: 428mb (dependencies)
