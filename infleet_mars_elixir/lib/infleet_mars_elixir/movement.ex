@@ -11,7 +11,9 @@ defmodule InfleetMarsElixir.Movement do
   alias InfleetMarsElixir.Movement.MovementStatus
 
   def set_world(x, y) do
-    Application.put_env(:infleet_mars_elixir, :world, %{x: x, y: y})
+    world = %{x: x, y: y}
+    Application.put_env(:infleet_mars_elixir, :world, world)
+    {:ok, world}
   end
 
   def world() do

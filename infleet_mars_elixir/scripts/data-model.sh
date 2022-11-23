@@ -64,3 +64,9 @@ mix phx.gen.json Movement Movements movements \
     terminals:string \
     movables_id:integer \
     --no-context --no-schema
+
+# add new endpoint to set world limit
+mix phx.gen.json Movement World worlds \
+    x:integer \
+    y:integer \
+    --no-context --no-schema
