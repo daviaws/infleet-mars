@@ -32,5 +32,6 @@ defmodule InfleetMarsElixir.Movement.Movements do
     |> validate_format(:terminals, InfleetMarsElixir.enum_format(:movement),
       message: "must be valid movementEnum"
     )
+    |> foreign_key_constraint(:movables_id)
   end
 end

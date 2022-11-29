@@ -51,3 +51,22 @@ mix phx.gen.context Movement Movables movables \
 
 # add movements (1.0) movable fk
 mix ecto.gen.migration add_movements_movable_fk
+
+# movables api (1.0)
+mix phx.gen.json Movement Movables movables \
+    x:integer \
+    y:integer \
+    direction:string \
+    --no-context --no-schema
+
+# movements api (1.0)
+mix phx.gen.json Movement Movements movements \
+    terminals:string \
+    movables_id:integer \
+    --no-context --no-schema
+
+# add new endpoint to set world limit
+mix phx.gen.json Movement World worlds \
+    x:integer \
+    y:integer \
+    --no-context --no-schema

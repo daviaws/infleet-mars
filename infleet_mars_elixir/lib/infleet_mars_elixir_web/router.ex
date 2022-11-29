@@ -1,12 +1,36 @@
 defmodule InfleetMarsElixirWeb.Router do
   use InfleetMarsElixirWeb, :router
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  scope "/", InfleetMarsElixirWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/app", PageController, :page
+    get "/app/:resource", PageController, :page
+    get "/app/:resource/:id", PageController, :page
+  end
+
   scope "/api", InfleetMarsElixirWeb do
     pipe_through :api
+
+    scope "/v1", V1, as: :v1 do
+      resources "/movables", MovablesController, except: [:new, :edit]
+      resources "/movements", MovementsController, except: [:new, :edit]
+
+      resources "/world", WorldController, only: [:index, :update]
+    end
   end
 
   # Enables LiveDashboard only for development

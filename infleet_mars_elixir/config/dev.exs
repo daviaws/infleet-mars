@@ -26,6 +26,14 @@ config :infleet_mars_elixir, InfleetMarsElixirWeb.Endpoint,
   secret_key_base: "AowRSt+iaJ+mdKON9jtrZBT48IOwi+J7OtFiW7MnWD9DjRVaJrE95GO7AzWcVwdt",
   watchers: []
 
+# [
+#   node: [
+#     "node_modules/react-scripts/bin/react-scripts.js",
+#     "start",
+#     cd: Path.expand("../assets", __DIR__),
+#   ]
+# ]
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

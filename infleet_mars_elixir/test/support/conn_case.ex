@@ -23,6 +23,7 @@ defmodule InfleetMarsElixirWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import InfleetMarsElixirWeb.ConnCase
+      import InfleetMarsElixir.Factory
 
       alias InfleetMarsElixirWeb.Router.Helpers, as: Routes
 
