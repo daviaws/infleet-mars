@@ -8,4 +8,6 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 \
 
 asdf plugin-add elixir
 asdf plugin-add erlang
+asdf plugin-add yarn
+asdf plugin-add nodejs
 asdf install

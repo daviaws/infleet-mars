@@ -16,7 +16,7 @@ defmodule InfleetMarsElixirWeb.V1.WorldController do
     with true <- is_integer(x) || "not an integer",
          true <- is_integer(y) || "not an integer",
          {:ok, world} <- Movement.set_world(x, y) do
-          render(conn, "show.json", world: world)
+      render(conn, "show.json", world: world)
     end
   end
 end

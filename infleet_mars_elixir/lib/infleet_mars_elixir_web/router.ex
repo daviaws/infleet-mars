@@ -1,8 +1,25 @@
 defmodule InfleetMarsElixirWeb.Router do
   use InfleetMarsElixirWeb, :router
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/", InfleetMarsElixirWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/app", PageController, :page
+    get "/app/:resource", PageController, :page
+    get "/app/:resource/:id", PageController, :page
   end
 
   scope "/api", InfleetMarsElixirWeb do
