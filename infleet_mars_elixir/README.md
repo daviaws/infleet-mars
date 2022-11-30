@@ -7,7 +7,6 @@ Elixir API for fleet control: infleet
 
 You can check `api.spec.md` at:
 * https://github.com/daviaws/infleet-mars/blob/main/api.spec.md
-* https://github.com/daviaws/infleet-mars/blob/elixir/api.spec.md
 
 ## Data Model
 
@@ -38,6 +37,8 @@ After `docker compose up` you can just up the db: `docker compose up -d db`
   and run `mix setup && mix phx.server`
 
   you can hook into with `iex -S mix`
+
+  warning: if you have conflicts may you need to `sudo rm -rf _build deps` because of docker builds
 
 ## Test results
 Run `mix run -e "InfleetMarsElixir.Task.exec_sample()"`

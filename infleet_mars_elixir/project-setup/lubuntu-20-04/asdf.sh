@@ -1,3 +1,5 @@
+echo "!!! Installing asdf !!!"
+
 # it will crash over retry and its ok to avoid plus appending on .bashrc
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 \
     && echo '' >> ~/.bashrc \

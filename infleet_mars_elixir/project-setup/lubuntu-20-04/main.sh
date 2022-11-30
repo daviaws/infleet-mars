@@ -1,11 +1,14 @@
 # asdf dependencies and global dev tools
-./global.sh
+./project-setup/lubuntu-20-04/global.sh
 
 # asdf installation
-./asdf.sh
+./project-setup/lubuntu-20-04/asdf.sh
+
+# mix setup.assets
+./project-setup/lubuntu-20-04/web-assets.sh
 
 # docker-desktop installation
-./docker-desktop.sh
+./project-setup/lubuntu-20-04/docker-desktop.sh
 
 # project
-./project.sh
+./project-setup/lubuntu-20-04/project.sh
