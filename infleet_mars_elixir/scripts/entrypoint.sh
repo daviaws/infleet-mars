@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 phoenix::start_web_service() {
+  mix deps.get &&
   mix ecto.migrations || {
     mix ecto.create \
       && mix ecto.migrate \

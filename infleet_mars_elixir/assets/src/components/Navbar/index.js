@@ -5,7 +5,7 @@ const Navbar = () =>
         <a href={`/app`}>App</a>
       </li>
       <li>
-        <a href={`contact`}>Contact</a>
+        <a href={`/app/contact`}>Contact</a>
       </li>
     </ul>
   </nav>

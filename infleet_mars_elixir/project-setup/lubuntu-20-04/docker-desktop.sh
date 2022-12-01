@@ -1,3 +1,5 @@
+echo "!!! Installing docker desktop !!!"
+
 # docker and docker compose together
 # https://docs.docker.com/engine/install/ubuntu/
 sudo apt-get install \
@@ -22,4 +24,4 @@ sudo groupadd docker
 
 sudo usermod -aG docker $USER
 
-echo "docker installed! you need to logout to use docker without `sudo`"
+echo "docker installed! you need to logout to use docker without 'sudo'"

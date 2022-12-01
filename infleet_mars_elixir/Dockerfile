@@ -11,8 +11,6 @@ RUN mix local.hex --force \
 COPY . /app
 WORKDIR /app
 
-RUN mix deps.get
-
 ENTRYPOINT [ "scripts/entrypoint.sh" ]
 
 EXPOSE 4000
